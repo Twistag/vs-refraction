@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Include href="VSGlobals.vsct"/>
+
+  <Commands package="Refraction">
+    <Groups>
+      <Group guid="Refraction" id="RefractionSettingsToosButtonGroup" priority="0x0700">
+        <Parent guid="VSMainMenu" id="Tools"/>
+      </Group>
+      <Group guid="Refraction" id="RefractionMenuGroup" priority="0x0700">
+        <Parent guid="Refraction" id="RefractionMenu"/>
+      </Group>
+    </Groups>
+
+    <Menus>
+      <Menu guid="Refraction" id="RefractionMenu" priority="0x0250" type="Menu">
+        <Parent guid="VSMainMenu" id="Tools.OptionsGroup"/>
+        <Strings>
+          <ButtonText>Refraction 599</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Buttons>
+
+
+      <Button guid="Refraction" id="DetectBugs" priority="0x0100" type="Button">
+        <Parent guid="Refraction" id="RefractionMenuGroup" />
+        <Strings>
+          <ButtonText>Detect bugs</ButtonText>
+          <LocCanonicalName>.Refraction.DetectBugs</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Refraction" id="AddDebugStatements" priority="0x0100" type="Button">
+        <Parent guid="Refraction" id="RefractionMenuGroup" />
+        <Strings>
+          <ButtonText>Add debug statements</ButtonText>
+          <LocCanonicalName>.Refraction.AddDebugStatements</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Refraction" id="CreateDocumentation" priority="0x0100" type="Button">
+        <Parent guid="Refraction" id="RefractionMenuGroup" />
+        <Strings>
+          <ButtonText>Create documentation</ButtonText>
+          <LocCanonicalName>.Refraction.CreateDocumentation</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Refraction" id="SeparateHardcodedLiterals" priority="0x0100" type="Button">
+        <Parent guid="Refraction" id="RefractionMenuGroup" />
+        <Strings>
+          <ButtonText>Separate hardcoded literals</ButtonText>
+          <LocCanonicalName>.Refraction.SeparateHardcodedLiterals</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Refraction" id="RefactorCode" priority="0x0100" type="Button">
+        <Parent guid="Refraction" id="RefractionMenuGroup" />
+        <Strings>
+          <ButtonText>Refactor code</ButtonText>
+          <LocCanonicalName>.Refraction.RefactorCode</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Refraction" id="StyleCheck" priority="0x0100" type="Button">
+        <Parent guid="Refraction" id="RefractionMenuGroup" />
+        <Strings>
+          <ButtonText>Style check</ButtonText>
+          <LocCanonicalName>.Refraction.StyleCheck</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Refraction" id="GenerateUnitTests" priority="0x0100" type="Button">
+        <Parent guid="Refraction" id="RefractionMenuGroup" />
+        <Strings>
+          <ButtonText>Generate unit tests</ButtonText>
+          <LocCanonicalName>.Refraction.GenerateUnitTests</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Refraction" id="AddTypes" priority="0x0100" type="Button">
+        <Parent guid="Refraction" id="RefractionMenuGroup" />
+        <Strings>
+          <ButtonText>Add types</ButtonText>
+          <LocCanonicalName>.Refraction.AddTypes</LocCanonicalName>
+        </Strings>
+      </Button>
+        
+      <Button guid="Refraction" id="RefractionSettings" priority="0x0010" type="Button">
+        <Parent guid="Refraction" id="RefractionSettingsToosButtonGroup"/>
+        <Strings>
+          <ButtonText>Refraction Settings</ButtonText>
+          <LocCanonicalName>.Tools.RefractionSettings</LocCanonicalName>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="Refraction" value="{3ae3415b-d5b6-4f59-857a-ea156e70ac71}">
+      <IDSymbol name="RefractionSettings" value="0x0010" />
+      <IDSymbol name="RefractionSettingsToosButtonGroup" value="0x0004" />
+      <IDSymbol name="DetectBugs" value="0x0005" />
+      <IDSymbol name="AddDebugStatements" value="0x0006" />
+      <IDSymbol name="CreateDocumentation" value="0x0007" />
+      <IDSymbol name="SeparateHardcodedLiterals" value="0x0008" />
+      <IDSymbol name="RefactorCode" value="0x0009" />
+      <IDSymbol name="StyleCheck" value="0x0011" />
+      <IDSymbol name="GenerateUnitTests" value="0x0012" />
+      <IDSymbol name="AddTypes" value="0x0013" />
+
+      <IDSymbol name="RefractionMenuGroup" value="0x0014" />
+      <IDSymbol name="RefractionMenu" value="0x0015" />
+
+      
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
