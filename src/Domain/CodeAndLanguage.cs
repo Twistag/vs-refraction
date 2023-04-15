@@ -17,5 +17,6 @@ namespace Refraction
         public string code { get; }
 
         public string language { get; }
+        public string framework { get; set; }
     }
 }

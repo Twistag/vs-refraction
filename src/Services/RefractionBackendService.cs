@@ -95,7 +95,7 @@ namespace Refraction
         {
             try
             {
-                return await internalGenerateAsync(utility);
+                return await internalGenerateAsync(utility, null);
             } 
             catch(Exception ex)
             {
@@ -104,10 +104,24 @@ namespace Refraction
             }
         }
 
-        private static async Task<bool> internalGenerateAsync(string utility)
+        public static async Task<bool> GenerateAsync(string utility, string framework)
+        {
+            try
+            {
+                return await internalGenerateAsync(utility, framework);
+            }
+            catch (Exception ex)
+            {
+                NotificationService.ShowErrorMessage(ex.Message);
+                return false;
+            }
+        }
+
+        private static async Task<bool> internalGenerateAsync(string utility, string framework)
         {
             UserCredentials userCredentials = PropertyService.GetUserCredentials();
             CodeAndLanguage codeAndLanguage = VSServices.getCodeAndLanguage();
+            codeAndLanguage.framework = framework;
             if (isEmpty(userCredentials.UserId))
             {
                 NotificationService.ShowErrorMessage("Please set your Refraction User ID from tools menu");

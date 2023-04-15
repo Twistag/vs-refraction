@@ -19,7 +19,7 @@ namespace Refraction
         public static CodeAndLanguage getCodeAndLanguage()
         {
             string code = getSelectedText();
-            string language = getLanguage();
+            string language = GetLanguage();
 
             return new CodeAndLanguage(code, language);
         }
@@ -50,17 +50,31 @@ namespace Refraction
         }
 
 
-        private static string getLanguage()
+        public static string GetLanguage()
         {
             Document activeDoc = getActiveDocument();
-            TextDocument textDoc = activeDoc.Object("TextDocument") as TextDocument;
+            string fileExtension = System.IO.Path.GetExtension(activeDoc.FullName);
 
-            if (activeDoc == null)
-            {
-                return null;
-            }
             
-            return textDoc.Language;
+
+            switch(fileExtension)
+            {
+                case ".java":
+                    {
+                        return "java";
+                    }
+                case ".py": {
+                        return "python";
+                    }
+                case ".cs":
+                    {
+                        return "csharp";
+                    }
+                default:
+                    {
+                        return fileExtension;
+                    }
+            }
         }
 
         private static Document getActiveDocument()
@@ -70,10 +84,8 @@ namespace Refraction
             return dte.ActiveDocument;
         }
 
-        public static string GetActiveDocumentLanguage()
+        private static string GetActiveDocumentLanguage()
         {
-  
-
             IVsTextManager textManager = (IVsTextManager)Package.GetGlobalService(typeof(SVsTextManager));
             Document activeDoc = getActiveDocument();
             string fileExtension = System.IO.Path.GetExtension(activeDoc.FullName);

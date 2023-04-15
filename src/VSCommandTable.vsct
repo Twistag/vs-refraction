@@ -20,7 +20,7 @@
       <Menu guid="Refraction" id="RefractionMenu" priority="0x0250" type="Menu">
         <Parent guid="VSMainMenu" id="Tools.OptionsGroup"/>
         <Strings>
-          <ButtonText>Refraction 599</ButtonText>
+          <ButtonText>Refraction</ButtonText>
         </Strings>
       </Menu>
     </Menus>
