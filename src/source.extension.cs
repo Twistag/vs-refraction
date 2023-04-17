@@ -9,10 +9,10 @@ namespace Refraction
     {
         public const string Id = "Refraction.26e69bc4-ab86-469a-ac8e-f9f16e77ff7e";
         public const string Name = "Refraction";
-        public const string Description = "";
+        public const string Description = "Makes it easy to switch between any installed theme by exposing them in a dynamic menu";
         public const string Language = "en-US";
         public const string Version = "1.0";
-        public const string Author = "";
+        public const string Author = "Hayden Bleasel";
         public const string Tags = "";
     }
 }

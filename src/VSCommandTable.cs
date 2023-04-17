@@ -12,8 +12,8 @@ namespace Refraction
     /// </summary>
     internal sealed partial class PackageGuids
     {
-        public const string ThemeSwitcherString = "3ae3415b-d5b6-4f59-857a-ea156e70ac71";
-        public static Guid ThemeSwitcher = new Guid(ThemeSwitcherString);
+        public const string RefractionGuidString = "3ae3415b-d5b6-4f59-857a-ea156e70ac71";
+        public static Guid Refraction = new Guid(RefractionGuidString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
