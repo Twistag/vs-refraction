@@ -2,11 +2,14 @@
 using Refracion;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using static System.Windows.Forms.LinkLabel;
 
 namespace Refraction
 {
@@ -34,39 +37,44 @@ namespace Refraction
             return response.IsSuccessStatusCode;
         }
 
-        private static async Task<bool> callGenerateAsync(CodeAndLanguage codeAndLanguage, UserCredentials userCredentials, string utility)
+        private static Task<bool> callGenerate(CodeAndLanguage codeAndLanguage, UserCredentials userCredentials, string utility)
         {
 
             string requestBody = JsonConvert.SerializeObject(codeAndLanguage);
 
-            HttpContent httpContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
 
-            using var request = new HttpRequestMessage(HttpMethod.Post, baseUrl + "/api/generate/" + utility);
+            Uri uri = new Uri(baseUrl + "/api/generate/" + utility);
+
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
+            request.Method = "POST";
             request.Headers.Add("X-Refraction-Source", "VS");
             request.Headers.Add("X-Refraction-User", userCredentials.UserId);
             request.Headers.Add("X-Refraction-Team", userCredentials.TeamId);
-            request.Content = httpContent;
-
-            HttpResponseMessage response = await httpClient.SendAsync(request);
-
-
-            if (response.IsSuccessStatusCode)
+            byte[] byteArray = Encoding.UTF8.GetBytes(requestBody);
+            request.ContentLength = byteArray.Length;
+            using (Stream stream = request.GetRequestStream())
             {
-                VSServices.InsertText("\n\n");
+                stream.Write(byteArray, 0, byteArray.Length);
+            }
 
-                using (var responseStream = await response.Content.ReadAsStreamAsync())
-                using (var streamReader = new System.IO.StreamReader(responseStream))
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                using (Stream stream = response.GetResponseStream())
                 {
-                    while (!streamReader.EndOfStream)
+                    using (StreamReader reader = new StreamReader(stream))
                     {
-                        string line = await streamReader.ReadLineAsync();
-                        line += "\n";
-                        VSServices.InsertText(line);
+                        VSServices.InsertText("\n\n");
+
+                        while (!reader.EndOfStream)
+                        {
+                            string line = reader.ReadLine();
+                            line += "\n";
+                            VSServices.InsertText(line);
+                        }
                     }
                 }
             }
-
-            return response.IsSuccessStatusCode;  
+            return Task.FromResult<bool>(true);
         }
 
         public static async Task<List<LanguageProps>> getLanguages()
@@ -151,7 +159,7 @@ namespace Refraction
                 return false;
             }
 
-            await callGenerateAsync(codeAndLanguage, userCredentials, utility);
+            await callGenerate(codeAndLanguage, userCredentials, utility);
             return true;
         }
 
