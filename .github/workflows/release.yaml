@@ -1,10 +1,7 @@
 name: Build and Publish VSIX
 
-on: 
+on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
@@ -19,17 +16,19 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Download VSIX PowerShell script
+      shell: pwsh
       run: |
         Invoke-WebRequest -Uri https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1 -OutFile vsix.ps1
 
     - name: Install VSIX dependencies
+      shell: pwsh
       run: |
         powershell -ExecutionPolicy RemoteSigned -File vsix.ps1
 
     - name: Increment and Update VSIX Version
       run: |
-        powershell -Command 'Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion'
-        powershell -Command 'Vsix-TokenReplacement src\source.extension.cs "Version = `"([0-9\\\.]+)`"" "Version = `"{version}`""'
+        Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
+        Vsix-TokenReplacement src\source.extension.cs "Version = `"([0-9\\\.]+)`"" "Version = `"{version}`""
 
     - name: Restore NuGet packages
       run: nuget restore
@@ -38,5 +37,6 @@ jobs:
       run: msbuild /p:configuration=${{ env.Configuration }} /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
 
     - name: Publish VSIX to Gallery
-      run: powershell -Command 'Vsix-PushArtifacts | Vsix-PublishToGallery'
+      shell: pwsh
+      run: Vsix-PushArtifacts | Vsix-PublishToGallery
       
