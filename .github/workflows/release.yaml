@@ -24,13 +24,10 @@ jobs:
     - name: Update version
       run: |
         (Get-Content -Path src\source.extension.vsixmanifest) |
-          ForEach-Object {$_ -Replace '1.0', '1.${{ github.run_number }}'} |
+          ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
             Set-Content -Path src\source.extension.vsixmanifest
-        (Get-Content -Path src\Properties\AssemblyInfo.cs) |
-          ForEach-Object {$_ -Replace '1.0', '1.${{ github.run_number }}'} |
-            Set-Content -Path src\Properties\AssemblyInfo.cs
         (Get-Content -Path src\source.extension.cs) |
-          ForEach-Object {$_ -Replace '1.0', '1.${{ github.run_number }}'} |
+          ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
             Set-Content -Path src\source.extension.cs
 
     - name: Restore
