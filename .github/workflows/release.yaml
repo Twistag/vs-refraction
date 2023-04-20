@@ -15,28 +15,32 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Download VSIX PowerShell script
-      shell: pwsh
-      run: |
-        Invoke-WebRequest -Uri https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1 -OutFile vsix.ps1
+    - name: Add nuget to PATH
+      uses: nuget/setup-nuget@v1
+    
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Install VSIX dependencies
-      shell: pwsh
+    - name: Update version
       run: |
-        powershell -ExecutionPolicy RemoteSigned -File vsix.ps1
+        (Get-Content -Path vs-refraction\source.extension.vsixmanifest) |
+          ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
+            Set-Content -Path vs-refraction\source.extension.vsixmanifest
+        (Get-Content -Path vs-refraction\Properties\AssemblyInfo.cs) |
+          ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
+            Set-Content -Path vs-refraction\Properties\AssemblyInfo.cs
+        (Get-Content -Path vs-refraction\vs-refraction.cs) |
+          ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
+            Set-Content -Path vs-refraction\vs-refraction.cs
 
-    - name: Increment and Update VSIX Version
-      run: |
-        Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
-        Vsix-TokenReplacement src\source.extension.cs "Version = `"([0-9\\\.]+)`"" "Version = `"{version}`""
-
-    - name: Restore NuGet packages
+    - name: Restore
       run: nuget restore
+        
+    - name: Build
+      run: msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal
 
-    - name: Build VSIX
-      run: msbuild /p:configuration=${{ env.Configuration }} /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
-
-    - name: Publish VSIX to Gallery
-      shell: pwsh
-      run: Vsix-PushArtifacts | Vsix-PublishToGallery
-      
+    - uses: actions/upload-artifact@v2
+      with:
+        name: vs-refraction.vsix
+        path: vs-refraction\bin\Release\vs-refraction.vsix
+        
