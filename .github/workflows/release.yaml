@@ -42,5 +42,5 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: vs-refraction.vsix
-        path: src\bin\Release\vs-refraction.vsix
+        path: src\bin\Release\Refraction.vsix
         
