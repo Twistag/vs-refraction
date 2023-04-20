@@ -23,15 +23,15 @@ jobs:
 
     - name: Update version
       run: |
-        (Get-Content -Path vs-refraction\source.extension.vsixmanifest) |
+        (Get-Content -Path vs-refraction\src\source.extension.vsixmanifest) |
           ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
-            Set-Content -Path vs-refraction\source.extension.vsixmanifest
-        (Get-Content -Path vs-refraction\Properties\AssemblyInfo.cs) |
+            Set-Content -Path vs-refraction\src\source.extension.vsixmanifest
+        (Get-Content -Path vs-refraction\src\Properties\AssemblyInfo.cs) |
           ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
-            Set-Content -Path vs-refraction\Properties\AssemblyInfo.cs
-        (Get-Content -Path vs-refraction\vs-refraction.cs) |
+            Set-Content -Path vs-refraction\src\Properties\AssemblyInfo.cs
+        (Get-Content -Path vs-refraction\src\vs-refraction.cs) |
           ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
-            Set-Content -Path vs-refraction\vs-refraction.cs
+            Set-Content -Path vs-refraction\src\vs-refraction.cs
 
     - name: Restore
       run: nuget restore
@@ -42,5 +42,5 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: vs-refraction.vsix
-        path: vs-refraction\bin\Release\vs-refraction.vsix
+        path: vs-refraction\src\bin\Release\vs-refraction.vsix
         
