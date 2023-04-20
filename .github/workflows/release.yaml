@@ -19,7 +19,7 @@ jobs:
       uses: nuget/setup-nuget@v1
     
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
 
     - name: Update version
       run: |
@@ -39,7 +39,7 @@ jobs:
     - name: Build
       run: msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: vs-refraction.vsix
         path: src\bin\Release\Refraction.vsix
