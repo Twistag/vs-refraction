@@ -29,9 +29,9 @@ jobs:
         (Get-Content -Path src\Properties\AssemblyInfo.cs) |
           ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
             Set-Content -Path src\Properties\AssemblyInfo.cs
-        (Get-Content -Path src\vs-refraction.cs) |
+        (Get-Content -Path src\source.extension.cs) |
           ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
-            Set-Content -Path src\vs-refraction.cs
+            Set-Content -Path src\source.extension.cs
 
     - name: Restore
       run: nuget restore
