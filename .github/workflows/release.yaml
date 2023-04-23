@@ -1,0 +1,43 @@
+name: Build and Publish VSIX
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  Configuration: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Add nuget to PATH
+      uses: nuget/setup-nuget@v1
+    
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Update version
+      run: |
+        (Get-Content -Path src\source.extension.vsixmanifest) |
+          ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
+            Set-Content -Path src\source.extension.vsixmanifest
+        (Get-Content -Path src\source.extension.cs) |
+          ForEach-Object {$_ -Replace '1.0.0', '1.0.${{ github.run_number }}'} |
+            Set-Content -Path src\source.extension.cs
+
+    - name: Restore
+      run: nuget restore
+        
+    - name: Build
+      run: msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: vs-refraction.vsix
+        path: src\bin\Release\Refraction.vsix
+        
