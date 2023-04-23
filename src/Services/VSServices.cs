@@ -23,6 +23,14 @@ namespace Refraction
 
             return new CodeAndLanguage(code, language);
         }
+        
+        public static TextSelection GetTextSelection()
+        {
+            Document activeDoc = getActiveDocument();
+            TextDocument textDoc = activeDoc.Object("TextDocument") as TextDocument;     
+            TextSelection selection = textDoc.Selection as TextSelection;
+            return selection;
+        }
 
         public static void InsertText(string text)
         {

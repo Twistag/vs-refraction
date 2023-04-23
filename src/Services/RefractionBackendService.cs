@@ -10,6 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
 using static System.Windows.Forms.LinkLabel;
+using EnvDTE;
+using Microsoft.VisualStudio.TextManager.Interop;
+using System.Windows.Controls;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.LanguageServices;
+using Community.VisualStudio.Toolkit;
 
 namespace Refraction
 {
@@ -41,17 +49,17 @@ namespace Refraction
         {
 
             string requestBody = JsonConvert.SerializeObject(codeAndLanguage);
-
+            byte[] byteArray = Encoding.UTF8.GetBytes(requestBody);
 
             Uri uri = new Uri(baseUrl + "/api/generate/" + utility);
 
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.Method = "POST";
             request.Headers.Add("X-Refraction-Source", "VS");
             request.Headers.Add("X-Refraction-User", userCredentials.UserId);
             request.Headers.Add("X-Refraction-Team", userCredentials.TeamId);
-            byte[] byteArray = Encoding.UTF8.GetBytes(requestBody);
             request.ContentLength = byteArray.Length;
+
             using (Stream stream = request.GetRequestStream())
             {
                 stream.Write(byteArray, 0, byteArray.Length);
@@ -63,17 +71,22 @@ namespace Refraction
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
-                        VSServices.InsertText("\n\n");
+                        TextSelection selection = VSServices.GetTextSelection();
+
+                        selection.Insert(codeAndLanguage.code);
+                        selection.Insert("\n\n");
 
                         while (!reader.EndOfStream)
                         {
                             string line = reader.ReadLine();
                             line += "\n";
-                            VSServices.InsertText(line);
+                            selection.Insert(line);
                         }
                     }
                 }
+
             }
+
             return Task.FromResult<bool>(true);
         }
 
