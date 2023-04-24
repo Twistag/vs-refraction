@@ -38,6 +38,6 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with:
-        name: vs-refraction.vsix
+        name: refraction-1.0.${{ github.run_number }}.vsix
         path: src\bin\Release\Refraction.vsix
         
