@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="Refraction.26e69bc4-ab86-469a-ac8e-f9f16e77ff7e" Version="1.0.0" Language="en-US" Publisher="Hayden Bleasel" />
+        <Identity Id="Refraction.26e69bc4-ab86-469a-ac8e-f9f16e77ff7e" Version="1.0.0" Language="en-US" Publisher="Refraction" />
         <DisplayName>Refraction</DisplayName>
         <Description xml:space="preserve">Learn, improve and generate code with AI.</Description>
         <MoreInfo>https://github.com/twistag/vs-refraction.git</MoreInfo>

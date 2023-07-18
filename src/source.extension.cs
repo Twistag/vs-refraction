@@ -12,7 +12,7 @@ namespace Refraction
         public const string Description = "Learn, improve and generate code with AI.";
         public const string Language = "en-US";
         public const string Version = "1.0.0";
-        public const string Author = "Hayden Bleasel";
+        public const string Author = "Refraction";
         public const string Tags = "";
     }
 }
