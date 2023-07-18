@@ -4,7 +4,7 @@
         <Identity Id="Refraction.26e69bc4-ab86-469a-ac8e-f9f16e77ff7e" Version="1.0.0" Language="en-US" Publisher="Hayden Bleasel" />
         <DisplayName>Refraction</DisplayName>
         <Description xml:space="preserve">Learn, improve and generate code with AI.</Description>
-        <MoreInfo>https://github.com/beskar-co/vs-refraction.git</MoreInfo>
+        <MoreInfo>https://github.com/twistag/vs-refraction.git</MoreInfo>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
     </Metadata>
