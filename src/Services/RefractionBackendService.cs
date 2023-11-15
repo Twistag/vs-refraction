@@ -24,7 +24,7 @@ namespace Refraction
     internal class RefractionBackendService
     {
         private static HttpClient httpClient = new HttpClient();
-        private static string baseUrl = "https://www.refraction.dev";
+        private static string baseUrl = "https://app.refraction.dev";
 
         private static async Task<bool> authenticateAsync(UserCredentials userCredentials)
         {
